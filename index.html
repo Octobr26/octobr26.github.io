@@ -1,245 +1,82 @@
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <link rel="icon" type="image/jpeg" href="./assets/logo.png" />
-        <title>바나나 우유</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: https://bootswatch.com/flatly/ -->
-        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">-->
-        <link rel="stylesheet" href="./css/bootstrap.min.css" />
-
-        <!-- extra glyphicons -->
-        <link href="css/bootstrap.icon-large.min.css" rel="stylesheet" />
-        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> -->
-        <link rel="stylesheet" href="./css/font-awesome.min.css" />
-        <link rel="stylesheet" href="./css/academicons.min.css" />
-
-        <!-- roboto font -->
-        <link
-            href="https://fonts.googleapis.com/css?family=Roboto:100"
-            rel="stylesheet"
-            type="text/css"
+        <meta
+            name="description"
+            content="An interactive double-pendulum chaos study by Luis Diaz."
         />
-
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="css/mainpage.css" />
-
+        <meta name="theme-color" content="#0d1024" />
+        <title>Luis Diaz: Chaos Study</title>
+        <link rel="icon" type="image/png" href="./assets/logo.png" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css?family=Inter:300,700"
+            href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@75..125,400..900&amp;family=Azeret+Mono:wght@400;500&amp;display=swap"
             rel="stylesheet"
         />
-        <style>
-            body {
-                font-family: "Inter", -apple-system, BlinkMacSystemFont,
-                    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
-                    "Helvetica Neue", sans-serif;
-                font-size: calc(10px + 0.33vw);
-                -webkit-font-smoothing: antialiased;
-                /* padding: 5vh 10vw; */
-                color: #0000ff;
-                background-color: #ffffff;
-            }
-            h1 {
-                font-size: 4.5em;
-                font-weight: 700;
-                margin-bottom: 0;
-            }
-            h2 {
-                font-size: 2.2em;
-                font-weight: 700;
-                letter-spacing: -1.5px;
-            }
-            p {
-                font-size: 1.3em;
-                font-weight: 300;
-                line-height: 1.4;
-                max-width: 28em;
-            }
-            a {
-                text-decoration: none;
-                white-space: nowrap;
-                color: #121314;
-                position: relative;
-            }
-            a:after {
-                content: "";
-                position: absolute;
-                z-index: -1;
-                top: 66%;
-                left: -0.1em;
-                right: -0.1em;
-                bottom: 0;
-                transition: top 200ms cubic-bezier(0, 0.8, 0.13, 1);
-                background-color: rgba(231, 5, 5, 0.991);
-            }
-            a:hover:after {
-                top: 0%;
-            }
-        </style>
+        <link rel="stylesheet" href="./styles.css" />
+        <script src="./js/chaos.js" defer></script>
     </head>
-    <body id="page-top" class="index">
-        <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" id="mainNavBar">
-            <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header page-scroll">
-                    <button
-                        type="button"
-                        class="navbar-toggle"
-                        data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1"
-                    >
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#page-top"
-                        ><emph>otoro.net</emph></a
-                    >
+    <body>
+        <main
+            class="experiment"
+            id="experiment"
+            tabindex="0"
+            aria-describedby="canvas-description interaction-hint"
+        >
+            <canvas
+                id="chaos-canvas"
+                aria-label="Animated double pendulums with nearly identical starting angles drawing diverging paths."
+            ></canvas>
+
+            <p class="sr-only" id="canvas-description">
+                Five simulated double pendulums start less than one thousandth
+                of a radian apart. Their paths quickly diverge and draw a
+                colorful record of deterministic chaos.
+            </p>
+
+            <header class="identity">
+                <a class="name" href="https://github.com/Octobr26">
+                    Luis Diaz
+                </a>
+                <p class="equation" aria-hidden="true">
+                    Δθ<sub>0</sub> = 0.0008 rad
+                </p>
+            </header>
+
+            <section class="statement" aria-labelledby="page-title">
+                <h1 id="page-title">
+                    Almost the same.<br />
+                    Then nowhere close.
+                </h1>
+            </section>
+
+            <footer class="footer">
+                <div class="caption">
+                    <p>
+                        Five double pendulums begin one fraction of a degree
+                        apart.
+                    </p>
+                    <p class="hint" id="interaction-hint">
+                        Tap anywhere to disturb the system. Press R to reset,
+                        Space to pause.
+                    </p>
+                    <p class="status" id="status" aria-live="polite">
+                        System running
+                    </p>
                 </div>
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div
-                    class="collapse navbar-collapse"
-                    id="bs-example-navbar-collapse-1"
-                >
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="hidden">
-                            <a href="#page-top"></a>
-                        </li>
-
-                        <li class="page-scroll">
-                            <a href="#about">about</a>
-                        </li>
-                        <li class="page-scroll">
-                            <a href="#portfolio">works</a>
-                        </li>
-
-                        <li class="page-scroll">
-                            <a href="#contact">contact</a>
-                        </li>
-
-                        <li class="page-scroll">
-                            <a href="https://blog.otoro.net/">blog</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
-            </div>
-            <!-- /.container-fluid -->
-        </nav>
-
-        <!-- Main Hero Section -->
-        <header>
-            <div id="creatureArea">
-                <canvas id="topCanvas"></canvas>
-            </div>
-        </header>
-        <section class="content-section">
-            <h1>"HELLO WORLD."</h1>
-
-            <br />
-            <br />
-
-            <h2>My name is Luis Diaz.</h2>
-
-            <br />
-
-            <p>
-                I am a software developer currently based in the United States.
-                I specialize in JavaScript frameworks, AWS solutions, and
-                fullstack development, with most of my work available on
-                <a href="https://github.com/Octobr26" target="_blank">GitHub</a
-                >. Currently, I contribute to innovative projects at
-                Intellimind, focusing on leading AI-powered solutions with AWS
-                Bedrock and the development of their
-                <a href="https://www.intellimind.com/" target="_blank"
-                    >homepage</a
-                >.
-            </p>
-
-            <br />
-
-            <p>
-                You can follow me on
-                <a href="https://x.com/luicss" target="_blank">X / Twitter</a>,
-                where I mostly share my interests, designs I like, and other
-                creative inspirations.
-            </p>
-
-            <br />
-            <p>
-                Outside of programming, I enjoy golf, following the NBA, and
-                experimenting in the kitchen with new recipes.
-            </p>
-        </section>
-
-        <!-- jQuery -->
-        <script src="js/jquery.min.js"></script>
-
-        <!-- Bootstrap Core JavaScript -->
-        <script src="js/bootstrap.min.js"></script>
-
-        <!-- Plugin JavaScript -->
-        <script src="js/jquery.easing.min.js"></script>
-        <script src="js/mobile-detect.min.js"></script>
-
-        <script src="js/blazy.js"></script>
-
-        <script>
-            // blazy code
-            var bLazy = new Blazy({
-                success: function () {
-                    updateCounter();
-                }
-            });
-
-            // not needed, only here to illustrate amount of loaded images
-            var imageLoaded = 0;
-
-            function updateCounter() {
-                imageLoaded++;
-                console.log("blazy image loaded: " + imageLoaded);
-            }
-        </script>
-
-        <!-- Custom Theme JavaScript -->
-        <script src="js/paper-full.min.js"></script>
-        <script src="js/box2d-html5.js"></script>
-        <script src="creatures-0.03.js"></script>
-
-        <script src="mainpage-0.06.js"></script>
-        <script src="pendulum-2.00.js"></script>
-        <script src="js/p5.min.js"></script>
-        <!--<script src="js/vivus.js"></script>-->
-
-        <script>
-            (function (i, s, o, g, r, a, m) {
-                i["GoogleAnalyticsObject"] = r;
-                (i[r] =
-                    i[r] ||
-                    function () {
-                        (i[r].q = i[r].q || []).push(arguments);
-                    }),
-                    (i[r].l = 1 * new Date());
-                (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
-                a.async = 1;
-                a.src = g;
-                m.parentNode.insertBefore(a, m);
-            })(
-                window,
-                document,
-                "script",
-                "//www.google-analytics.com/analytics.js",
-                "ga"
-            );
-
-            ga("create", "UA-61361005-1", "auto");
-            ga("send", "pageview");
-        </script>
+                <nav class="links" aria-label="Related links">
+                    <a href="https://natureofcode.com/oscillation/">
+                        Inspiration
+                    </a>
+                    <a href="https://github.com/Octobr26/octobr26.github.io">
+                        View source
+                    </a>
+                </nav>
+            </footer>
+        </main>
     </body>
 </html>
